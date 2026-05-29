@@ -1,101 +1,160 @@
-import Image from "next/image";
+import Link from 'next/link'
+import { ArrowRight } from 'lucide-react'
+import { HeroSection } from '@/components/HeroSection'
+import { DohaCard } from '@/components/DohaCard'
+import { WriterCard } from '@/components/WriterCard'
+import { AnimatedSection } from '@/components/AnimatedSection'
+import { featuredDohe, allThemes, allWriters, dohe } from '@/lib/data'
+
+const themeEmojis: Record<string, string> = {
+  'Love & Relationships': '❤',
+  'Friendship': '🤝',
+  'Character': '⭐',
+  'Wisdom': '🌙',
+  'Acceptance': '🌿',
+  'Service': '🙏',
+  'Wealth & Materialism': '⚖',
+}
+
+const spotlightWriters = allWriters.filter((w) =>
+  ['rahim', 'kabir-das', 'tulsidas', 'gandhi', 'tagore', 'kalam'].includes(w.slug)
+)
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const homeFeatured = featuredDohe.slice(0, 8)
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  return (
+    <>
+      <HeroSection />
+
+      {/* Featured Dohe */}
+      <section className="py-20 px-4 sm:px-6 max-w-6xl mx-auto">
+        <AnimatedSection>
+          <div className="text-center mb-12">
+            <p className="text-gold/50 text-xs font-ui uppercase tracking-[0.25em] mb-3">
+              Featured
+            </p>
+            <h2 className="text-3xl sm:text-4xl font-english text-parchment/90">
+              Most Beloved Dohe
+            </h2>
+            <p className="text-parchment/40 text-sm font-ui mt-3 max-w-md mx-auto">
+              Click any card to flip and reveal the English meaning
+            </p>
+          </div>
+        </AnimatedSection>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          {homeFeatured.map((doha, i) => (
+            <AnimatedSection key={doha.id} delay={i * 0.08} direction="up">
+              <DohaCard doha={doha} variant="featured" />
+            </AnimatedSection>
+          ))}
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
+
+        <AnimatedSection delay={0.4}>
+          <div className="text-center mt-10">
+            <Link href="/dohe" className="btn-outline-gold">
+              View All {dohe.length} Dohe <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+        </AnimatedSection>
+      </section>
+
+      {/* Writers */}
+      <section className="py-20 px-4 sm:px-6 bg-gradient-to-b from-transparent to-black/20">
+        <div className="max-w-6xl mx-auto">
+          <AnimatedSection>
+            <div className="text-center mb-12">
+              <p className="text-gold/50 text-xs font-ui uppercase tracking-[0.25em] mb-3">
+                Authors
+              </p>
+              <h2 className="text-3xl sm:text-4xl font-english text-parchment/90">
+                Explore by Writer
+              </h2>
+              <p className="text-parchment/40 text-sm font-ui mt-3">
+                {allWriters.length} saints, poets, and philosophers
+              </p>
+            </div>
+          </AnimatedSection>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-10">
+            {spotlightWriters.map((writer, i) => (
+              <AnimatedSection key={writer.slug} delay={i * 0.06}>
+                <WriterCard writer={writer} />
+              </AnimatedSection>
+            ))}
+          </div>
+
+          <div className="text-center">
+            <Link href="/writers" className="btn-gold">
+              All Writers <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Themes section */}
+      <section className="py-20 px-4 sm:px-6 max-w-4xl mx-auto">
+        <AnimatedSection>
+          <div className="text-center mb-12">
+            <p className="text-gold/50 text-xs font-ui uppercase tracking-[0.25em] mb-3">
+              By Theme
+            </p>
+            <h2 className="text-3xl sm:text-4xl font-english text-parchment/90">
+              Explore by Topic
+            </h2>
+          </div>
+        </AnimatedSection>
+
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+          {allThemes.slice(1).map((theme, i) => (
+            <AnimatedSection key={theme} delay={i * 0.07}>
+              <Link
+                href={`/dohe?theme=${encodeURIComponent(theme)}`}
+                className="group flex flex-col items-center gap-2 p-4 rounded-xl border border-gold/15 bg-white/3 hover:bg-gold/8 hover:border-gold/40 transition-all duration-200 text-center"
+              >
+                <span className="text-2xl">{themeEmojis[theme] ?? '✦'}</span>
+                <span className="text-parchment/70 group-hover:text-parchment text-xs font-ui leading-tight transition-colors">
+                  {theme}
+                </span>
+              </Link>
+            </AnimatedSection>
+          ))}
+        </div>
+      </section>
+
+      {/* Rahim teaser */}
+      <section className="py-20 px-4 sm:px-6 max-w-4xl mx-auto">
+        <AnimatedSection direction="fade">
+          <div className="relative border border-gold/20 rounded-3xl p-8 sm:p-12 bg-white/3 overflow-hidden">
+            <div
+              className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden"
+              aria-hidden
+            >
+              <span className="font-devanagari text-gold/3 text-[12rem] font-bold leading-none">
+                रहीम
+              </span>
+            </div>
+
+            <div className="relative z-10 text-center">
+              <p className="text-gold/50 text-xs font-ui uppercase tracking-[0.25em] mb-4">
+                Featured Poet
+              </p>
+              <h2 className="text-3xl sm:text-4xl font-english text-parchment/90 mb-6">
+                Abdul Rahim Khan-i-Khanan
+              </h2>
+              <p className="text-parchment/55 english-serif text-base sm:text-lg leading-relaxed max-w-2xl mx-auto mb-8">
+                A Mughal general, polyglot scholar, and one of Akbar&apos;s Nine Gems — Rahim chose
+                to write not in Persian, the language of nobility, but in Hindi, the language of the
+                people. His wisdom has endured for over 400 years.
+              </p>
+              <Link href="/biography/rahim" className="btn-gold">
+                Read His Story <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+          </div>
+        </AnimatedSection>
+      </section>
+    </>
+  )
 }
