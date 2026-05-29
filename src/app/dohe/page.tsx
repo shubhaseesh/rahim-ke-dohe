@@ -7,14 +7,7 @@ export const metadata = {
   description: `Browse ${dohe.length} dohe and verses from classical Indian writers with Hindi text, English translations, and theme filters.`,
 }
 
-export default function DohePage({
-  searchParams,
-}: {
-  searchParams: { theme?: string; author?: string }
-}) {
-  const initialTheme = searchParams.theme ?? 'All'
-  const initialAuthor = searchParams.author ?? 'all'
-
+export default function DohePage() {
   return (
     <div className="min-h-screen pt-24 pb-16 px-4 sm:px-6 max-w-6xl mx-auto">
       <AnimatedSection>
@@ -34,13 +27,7 @@ export default function DohePage({
         </div>
       </AnimatedSection>
 
-      <DoheGrid
-        dohe={dohe}
-        showSearch
-        showAuthorFilter
-        initialTheme={initialTheme}
-        initialAuthor={initialAuthor}
-      />
+      <DoheGrid dohe={dohe} showSearch showAuthorFilter />
     </div>
   )
 }

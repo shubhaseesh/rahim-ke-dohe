@@ -1,6 +1,7 @@
 'use client'
 
-import { useState, useMemo, useEffect } from 'react'
+import { useState, useMemo, useEffect, Suspense } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { motion, LayoutGroup } from 'framer-motion'
 import { DohaCard } from './DohaCard'
 import { SearchBar } from './SearchBar'
@@ -18,13 +19,15 @@ function loadUserDohe(): Doha[] {
   }
 }
 
-export function DoheGrid({
+function DoheGridInner({
   dohe,
   showSearch = true,
   showAuthorFilter = true,
-  initialTheme = 'All',
-  initialAuthor = 'all',
-}: DoheGridProps) {
+}: Omit<DoheGridProps, 'initialTheme' | 'initialAuthor'>) {
+  const searchParams = useSearchParams()
+  const initialTheme = searchParams.get('theme') ?? 'All'
+  const initialAuthor = searchParams.get('author') ?? 'all'
+
   const [activeTheme, setActiveTheme] = useState(initialTheme)
   const [activeAuthor, setActiveAuthor] = useState(initialAuthor)
   const [searchQuery, setSearchQuery] = useState('')
@@ -118,5 +121,13 @@ export function DoheGrid({
         </div>
       )}
     </div>
+  )
+}
+
+export function DoheGrid(props: Omit<DoheGridProps, 'initialTheme' | 'initialAuthor'>) {
+  return (
+    <Suspense fallback={null}>
+      <DoheGridInner {...props} />
+    </Suspense>
   )
 }

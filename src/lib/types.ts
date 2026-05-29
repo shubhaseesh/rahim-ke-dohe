@@ -63,8 +63,6 @@ export interface DoheGridProps {
   dohe: Doha[]
   showSearch?: boolean
   showAuthorFilter?: boolean
-  initialTheme?: string
-  initialAuthor?: string
 }
 
 export interface ThemeFilterProps {
