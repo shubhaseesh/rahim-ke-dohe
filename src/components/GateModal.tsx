@@ -39,6 +39,9 @@ function validateInput(value: string): string | null {
 }
 
 export function GateModal() {
+  // disabled for now
+  return null
+
   const [visible, setVisible] = useState(false)
   const [value, setValue] = useState('')
   const [error, setError] = useState('')
